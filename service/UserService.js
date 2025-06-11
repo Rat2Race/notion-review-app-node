@@ -1,4 +1,9 @@
-const { User } = require("../db/Connection");
+/**
+ * 사용자별 AT/RT 저장
+ * DB CRUD 구현
+ */
+
+const { User } = require("../db/connection");
 
 const userService = {
   async getAllUser() {
@@ -7,9 +12,11 @@ const userService = {
 
   async getUserById(user_id) {
     const user = await User.findOne({ where: { user_id } });
+
     if (user == null) {
       console.log("유저를 찾을 수 없습니다.");
     }
+
     console.log(user instanceof User);
 
     return user;
@@ -28,8 +35,8 @@ const userService = {
     return user;
   },
 
-  async updateUser(user_id, access_token) {
-    return await User.update({ access_token }, { where: { user_id } });
+  async updateUser(user_id, new_access_token) {
+    return await User.update({ new_access_token }, { where: { user_id } });
   },
 
   async deleteUser(user_id) {

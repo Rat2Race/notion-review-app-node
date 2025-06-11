@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const notionRoutes = require("./routes/Notion");
-const { sequelize } = require("./db/Connection");
+const { sequelize } = require("./db/connection");
 
 const app = express();
 app.use(cors());
