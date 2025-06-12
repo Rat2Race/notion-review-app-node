@@ -9,7 +9,13 @@ export const notionBlockParserTool = tool({
     blocks: z.array(z.object({ type: z.string() }).strict()),
   }),
   execute: async ({ blocks }) => {
+    console.log(
+      "[notionBlockParserTool] Parsing",
+      Array.isArray(blocks) ? blocks.length : 0,
+      "blocks"
+    );
     const text = NotionBlockParser.blocksToPlainText(blocks);
+    console.log("[notionBlockParserTool] Parsed text:\n" + text);
     return { text };
   },
 });

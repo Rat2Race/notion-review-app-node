@@ -10,8 +10,13 @@ export const notionReadTool = tool({
     access_token: z.string(),
   }),
   execute: async ({ pageId, access_token }) => {
+    console.log("[notionReadTool] Reading page", pageId);
     const notion = new Client({ auth: access_token });
     const response = await notion.blocks.children.list({ block_id: pageId });
+    console.log(
+      "[notionReadTool] Fetched blocks:",
+      Array.isArray(response.results) ? response.results.length : 0
+    );
     return { blocks: response.results };
   },
 });
