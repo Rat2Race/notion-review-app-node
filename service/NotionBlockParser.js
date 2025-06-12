@@ -57,4 +57,4 @@ class NotionBlockParser {
   }
 }
 
-module.exports = NotionBlockParser;
+export default NotionBlockParser;
