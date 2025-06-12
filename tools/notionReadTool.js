@@ -24,12 +24,5 @@ export const notionReadTool = tool({
       console.error("[notionReadTool] Error fetching blocks:", err.message);
       throw err;
     }
-
-    const response = await notion.blocks.children.list({ block_id: pageId });
-    console.log(
-      "[notionReadTool] Fetched blocks:",
-      Array.isArray(response.results) ? response.results.length : 0
-    );
-    return { blocks: response.results };
   },
 });
