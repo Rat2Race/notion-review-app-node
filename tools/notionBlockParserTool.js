@@ -23,10 +23,5 @@ export const notionBlockParserTool = tool({
       console.error("[notionBlockParserTool] Parsing failed:", err.message);
       throw err;
     }
-
-    const text = NotionBlockParser.blocksToPlainText(blocks);
-    console.log("[notionBlockParserTool] Parsed text:\n" + text);
-    return { text };
-
   },
 });

@@ -22,24 +22,6 @@ export const quizGeneratorTool = tool({
             },
             { role: "user", content: text },
           ],
-
-    const res = await axios.post(
-      "https://api.openai.com/v1/chat/completions",
-      {
-        model: "gpt-4o",
-        messages: [
-          {
-            role: "system",
-            content:
-              "아래 내용을 바탕으로 객관식 문제 3개를 만들어줘. 정답도 표기해줘.",
-          },
-          { role: "user", content: text },
-        ],
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-          "Content-Type": "application/json",
         },
         {
           headers: {
@@ -59,9 +41,5 @@ export const quizGeneratorTool = tool({
       );
       throw err;
     }
-
-    const quiz = res.data.choices[0]?.message.content;
-    console.log("[quizGeneratorTool] Quiz generated:\n" + quiz);
-    return { quiz };
   },
 });
