@@ -1,4 +1,4 @@
-import { getAccessToken } from "./userService.js";
+import { getAccessToken } from "./UserService.js";
 import { notionReadTool } from "../tools/notionReadTool.js";
 
 export const readUserNotionPage = async ({ userId, pageId }) => {

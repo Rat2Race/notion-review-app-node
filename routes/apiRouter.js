@@ -174,7 +174,7 @@
 import express from "express";
 import axios from "axios";
 import { Client } from "@notionhq/client";
-import { getAccessToken, saveAccessToken } from "../service/userService.js";
+import { getAccessToken, saveAccessToken } from "../service/UserService.js";
 import { generateQuiz } from "../service/notionQuizService.js";
 
 const router = express.Router();
