@@ -4,7 +4,7 @@
  * DB CRUD 구현
  */
 
-import { User } from "../db/user.js";
+import { User } from "../db/User.js";
 
 export const saveAccessToken = async (user_id, access_token) => {
   await User.upsert({ user_id, access_token });
