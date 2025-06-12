@@ -12,6 +12,19 @@ export const notionReadTool = tool({
   execute: async ({ pageId, access_token }) => {
     console.log("[notionReadTool] Reading page", pageId);
     const notion = new Client({ auth: access_token });
+
+    try {
+      const response = await notion.blocks.children.list({ block_id: pageId });
+      console.log(
+        "[notionReadTool] Fetched blocks:",
+        Array.isArray(response.results) ? response.results.length : 0
+      );
+      return { blocks: response.results };
+    } catch (err) {
+      console.error("[notionReadTool] Error fetching blocks:", err.message);
+      throw err;
+    }
+
     const response = await notion.blocks.children.list({ block_id: pageId });
     console.log(
       "[notionReadTool] Fetched blocks:",

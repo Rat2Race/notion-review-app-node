@@ -8,6 +8,21 @@ export const quizGeneratorTool = tool({
   parameters: z.object({ text: z.string() }),
   execute: async ({ text }) => {
     console.log("[quizGeneratorTool] Generating quiz with text:\n" + text);
+
+    try {
+      const res = await axios.post(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          model: "gpt-4o",
+          messages: [
+            {
+              role: "system",
+              content:
+                "아래 내용을 바탕으로 객관식 문제 3개를 만들어줘. 정답도 표기해줘.",
+            },
+            { role: "user", content: text },
+          ],
+
     const res = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       {
@@ -26,8 +41,24 @@ export const quizGeneratorTool = tool({
           Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
           "Content-Type": "application/json",
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const quiz = res.data.choices[0]?.message.content;
+      console.log("[quizGeneratorTool] Quiz generated:\n" + quiz);
+      return { quiz };
+    } catch (err) {
+      console.error(
+        "[quizGeneratorTool] Quiz generation failed:",
+        err.response?.data || err.message
+      );
+      throw err;
+    }
 
     const quiz = res.data.choices[0]?.message.content;
     console.log("[quizGeneratorTool] Quiz generated:\n" + quiz);
