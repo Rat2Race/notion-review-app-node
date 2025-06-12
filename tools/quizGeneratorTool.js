@@ -7,6 +7,7 @@ export const quizGeneratorTool = tool({
   description: "텍스트를 받아서 퀴즈 생성",
   parameters: z.object({ text: z.string() }),
   execute: async ({ text }) => {
+    console.log("[quizGeneratorTool] Generating quiz with text:\n" + text);
     const res = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       {
@@ -29,6 +30,7 @@ export const quizGeneratorTool = tool({
     );
 
     const quiz = res.data.choices[0]?.message.content;
+    console.log("[quizGeneratorTool] Quiz generated:\n" + quiz);
     return { quiz };
   },
 });
