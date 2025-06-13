@@ -1,93 +1,55 @@
-<div align="center">
+# Notion Review App Backend
 
-<!-- logo -->
-<img src="public/image/tiredMouse.png" width="200"/>
+이 저장소는 Notion API와 OpenAI API를 이용해 노션 페이지 내용을 기반으로 퀴즈를 생성해 주는 간단한 백엔드 서버입니다.
 
-### Back-end Notion Repository ✅
+## 기능
 
-[<img src="https://img.shields.io/badge/-readme.md-important?style=flat&logo=google-chrome&logoColor=white" />]()[<img src="https://img.shields.io/badge/project duration-2025.06.01~-green?style=flat&logo=&logoColor=white" />]()
+- **Notion OAuth 연동**: 사용자가 발급한 Notion 액세스 토큰을 데이터베이스에 저장합니다.
+- **페이지 검색/조회**: 사용자의 노션 페이지 목록을 조회하거나 특정 페이지의 블록을 읽어 옵니다.
+- **퀴즈 생성**: 읽어 온 페이지 내용을 OpenAI API로 전달하여 퀴즈 형식의 문장을 생성합니다.
 
-</div>
+## 주요 경로
 
-## 📝 Introduce
+- `app.js` – Express 서버 초기화 및 라우터 등록
+- `routes/api-router.js` – API 엔드포인트 정의
+- `service/` – Notion, OpenAI, 사용자 관리 로직
+- `db/` – Sequelize 설정 및 `User` 모델 정의
 
-Notion 기반 복습
+## 실행 방법
 
-- 프로젝트 소개
-- 프로젝트 화면 구성 또는 프로토 타입
-- 프로젝트 API 설계
-- 사용한 기술 스택
-- 프로젝트 아키텍쳐
-- 기술적 이슈와 해결 과정
+1. 의존성 설치
+   ```bash
+   npm install
+   ```
+2. `.env` 파일에 환경 변수를 설정합니다. 필요한 값은 다음과 같습니다.
+   ```
+   PORT=5000
+   NOTION_CLIENT_ID=your_notion_client_id
+   NOTION_CLIENT_SECRET=your_notion_client_secret
+   OPENAI_API_URL=https://api.openai.com/v1/chat/completions
+   OPENAI_MODEL=gpt-3.5-turbo
+   OPENAI_ROLE=system
+   OPENAI_INSTRUCTION="질문에 대한 지시문"
+   OPENAI_API_KEY=your_openai_api_key
+   DB_NAME=notion
+   DB_USER=root
+   DB_PASSWORD=password
+   DB_HOST=localhost
+   DB_DIALECT=mysql
+   ```
+3. 서버 실행
+   ```bash
+   node app.js
+   ```
 
-<br />
+기본 포트는 `5000`이며, `.env` 파일을 통해 변경할 수 있습니다.
 
-> 화면 구성과 프로토 타입 중 원하는 것을 사용해주세요.
+## API 요약
 
-### 화면 구성
-
-|                                                           Screen #1                                                            |                                                           Screen #2                                                            |
-| :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: |
-| <img src="https://user-images.githubusercontent.com/80824750/208456048-acbf44a8-cd71-4132-b35a-500047adbe1c.gif" width="400"/> | <img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="400"/> |
-
-### 프로토타입
+- `POST /api/oauth/callback` – Notion OAuth 인증 후 토큰 저장
+- `POST /api/search` – 사용자의 노션 페이지 목록 조회 또는 특정 페이지 읽기
+- `POST /api/quiz` – 페이지 내용을 이용해 퀴즈 생성
 
 ---
 
-<img src="https://user-images.githubusercontent.com/80824750/208454673-0449e49c-57c6-4a6b-86cf-66c5b1e623dc.png">
-
-<br />
-
-## 🗂️ APIs
-
-작성한 API는 아래에서 확인할 수 있습니다.
-
-👉🏻 [API 바로보기](/backend/APIs.md)
-
-<br />
-
-## ⚙ 기술 스택
-
-> skills 폴더에 있는 아이콘을 이용할 수 있습니다.
-
-### Back-end
-
-<div>
-<img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Java.png?raw=true" width="80">
-<img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/SpringBoot.png?raw=true" width="80">
-<img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/SpringSecurity.png?raw=true" width="80">
-<img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/SpringDataJPA.png?raw=true" width="80">
-<img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Mysql.png?raw=true" width="80">
-<img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Ajax.png?raw=true" width="80">
-<img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Thymeleaf.png?raw=true" width="80">
-</div>
-
-### Infra
-
-<div>
-<img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/AWSEC2.png?raw=true" width="80">
-</div>
-
-### Tools
-
-<div>
-<img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Github.png?raw=true" width="80">
-<img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/Notion.png?raw=true" width="80">
-</div>
-
-<br />
-
-## 🛠️ 프로젝트 아키텍쳐
-
-![no-image](https://user-images.githubusercontent.com/80824750/208294567-738dd273-e137-4bbf-8307-aff64258fe03.png)
-
-<br />
-
-## 🤔 기술적 이슈와 해결 과정
-
-- Stream 써야할까?
-  - [Stream API에 대하여](https://velog.io/@yewo2nn16/Java-Stream-API)
-
-<br />
-
-출처: https://github.com/yewon-Noh/readme-template
+간단한 예제 서버로, 필요에 따라 코드와 데이터베이스 구조를 확장하여 사용할 수 있습니다.
