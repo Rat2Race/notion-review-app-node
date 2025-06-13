@@ -1,21 +1,30 @@
-# Notion Review App Backend
+<div align="center">
+
+<!-- logo -->
+<img src="public/image/tiredMouse.png" width="200"/>
+
+### Notion Review App Backend ✅
+[<img src="https://img.shields.io/badge/-readme.md-important?style=flat&logo=google-chrome&logoColor=white" />]()[<img src="https://img.shields.io/badge/project duration-2025.06.01~-green?style=flat&logo=&logoColor=white" />]()
+
+</div>
+
+## 📝 Introduce
 
 이 저장소는 Notion API와 OpenAI API를 이용해 노션 페이지 내용을 기반으로 퀴즈를 생성해 주는 간단한 백엔드 서버입니다.
-
-## 기능
-
 - **Notion OAuth 연동**: 사용자가 발급한 Notion 액세스 토큰을 데이터베이스에 저장합니다.
 - **페이지 검색/조회**: 사용자의 노션 페이지 목록을 조회하거나 특정 페이지의 블록을 읽어 옵니다.
 - **퀴즈 생성**: 읽어 온 페이지 내용을 OpenAI API로 전달하여 퀴즈 형식의 문장을 생성합니다.
+<br />
 
-## 주요 경로
+## 🗂️ Main Path
 
 - `app.js` – Express 서버 초기화 및 라우터 등록
 - `routes/api-router.js` – API 엔드포인트 정의
 - `service/` – Notion, OpenAI, 사용자 관리 로직
 - `db/` – Sequelize 설정 및 `User` 모델 정의
+<br />
 
-## 실행 방법
+## 🔧 Execute
 
 1. 의존성 설치
    ```bash
@@ -44,7 +53,9 @@
 
 기본 포트는 `5000`이며, `.env` 파일을 통해 변경할 수 있습니다.
 
-## API 요약
+<br />
+
+## 📄 APIs
 
 - `POST /api/oauth/callback` – Notion OAuth 인증 후 토큰 저장
 - `POST /api/search` – 사용자의 노션 페이지 목록 조회 또는 특정 페이지 읽기
