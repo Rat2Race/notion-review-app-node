@@ -60,7 +60,7 @@ router.post("/quiz", async (req, res) => {
   console.log("[quiz-service]: ", text);
   try {
     const quiz = await generateQuiz(text);
-    res.json({ quiz: JSON.stringify(quiz) });
+    res.json({ quiz });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

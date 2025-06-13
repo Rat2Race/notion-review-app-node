@@ -32,7 +32,7 @@ export const generateQuiz = async (text) => {
     const quiz = res.data.choices[0]?.message.content;
     console.log("[notionQuizService] Quiz generated:\n" + quiz);
 
-    return { quiz };
+    return quiz;
   } catch (err) {
     console.error(
       "[notionQuizService] Quiz generation failed:",
