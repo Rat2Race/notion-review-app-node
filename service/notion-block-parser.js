@@ -18,7 +18,9 @@ class NotionBlockParser {
   };
 
   static blockToText(block) {
-    for (const [type, { prefix, get }] of Object.entries(this.typeMap)) {
+    for (const [type, { prefix, get }] of Object.entries(
+      NotionBlockParser.typeMap
+    )) {
       if (block[type] && get(block)) {
         return (
           prefix +

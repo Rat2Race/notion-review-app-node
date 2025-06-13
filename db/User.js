@@ -2,13 +2,15 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "./Connection.js";
 
 export const User = sequelize.define("User", {
-  user_id: {
+  userId: {
     type: DataTypes.STRING,
+    field: "user_id",
     primaryKey: true,
     allowNull: false,
   },
-  access_token: {
+  accessToken: {
     type: DataTypes.STRING,
+    field: "access_token",
     allowNull: false,
   },
 });
