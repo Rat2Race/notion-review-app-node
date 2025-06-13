@@ -5,17 +5,39 @@ import { run } from "@openai/agents";
 export const generateQuiz = async (user_id, pageId) => {
   console.log("[notionQuizService] Generating quiz for page", pageId);
   const access_token = await getAccessToken(user_id);
+
   if (!access_token) throw new Error("Notion 인증 없음");
-  
+
   try {
-    const result = await run(agent, "Notion 페이지에서 퀴즈 생성", {
-      pageId,
-      access_token,
-    });
-    console.log("[notionQuizService] Agent final output:", result.finalOutput);
-    return result.finalOutput?.quiz ?? result.finalOutput;
+    const res = await axios.post(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        model: "gpt-4o",
+        messages: [
+          {
+            role: "system",
+            content:
+              "아래 내용을 바탕으로 객관식 문제 3개를 만들어줘. 정답도 표기해줘.",
+          },
+          { role: "user", content: text },
+        ],
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const quiz = res.data.choices[0]?.message.content;
+    console.log("[quizGeneratorTool] Quiz generated:\n" + quiz);
+    return { quiz };
   } catch (err) {
-    console.error("[notionQuizService] Agent run failed:", err.message);
+    console.error(
+      "[quizGeneratorTool] Quiz generation failed:",
+      err.response?.data || err.message
+    );
     throw err;
   }
 };
