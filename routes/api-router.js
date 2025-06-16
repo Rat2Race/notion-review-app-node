@@ -6,15 +6,16 @@ import {
   listUserNotionPages,
 } from "../service/notion-service.js";
 import NotionBlockParser from "../service/notion-block-parser.js";
+import { saveAccessToken } from "../service/user-service.js";
 
 const router = express.Router();
 
 router.post("/oauth/callback", async (req, res) => {
-  const { code, redirectUri } = req.body;
+  const { code, redirect_uri } = req.body;
   try {
     const tokenRes = await axios.post(
       "https://api.notion.com/v1/oauth/token",
-      { grant_type: "authorization_code", code, redirectUri },
+      { grant_type: "authorization_code", code, redirect_uri },
       {
         auth: {
           username: process.env.NOTION_CLIENT_ID,
@@ -24,13 +25,14 @@ router.post("/oauth/callback", async (req, res) => {
       }
     );
 
-    const { accessToken, owner } = tokenRes.data;
-    const userId = owner.user.id;
+    const { access_token, owner } = tokenRes.data;
+    const userId = owner?.user?.id;
 
-    await saveAccessToken(userId, accessToken);
+    await saveAccessToken(userId, access_token);
 
     res.json({ success: true, userId });
   } catch (e) {
+    console.error("OAuth error:", e?.response?.data || e);
     res.status(500).json({ error: e.message });
   }
 });
